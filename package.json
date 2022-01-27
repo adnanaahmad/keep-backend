@@ -1,0 +1,21 @@
+{
+  "name": "keep-backend",
+  "version": "1.0.0",
+  "description": "it's a clone of google keep",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "debug": "ndb index.js"
+  },
+  "keywords": [
+    "api",
+    "restful",
+    "json"
+  ],
+  "author": "Adnan Ahmad",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mongoose": "^6.1.8"
+  }
+}
