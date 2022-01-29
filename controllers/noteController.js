@@ -14,17 +14,42 @@ exports.createNote = catchAsync(async (req, res, next) => {
 });
 // Handle view Note
 exports.getNote = catchAsync(async (req, res, next) => {
-    res.send('getNote api is working');
+    const note = await Note.findById(req.params.id);
+    res.status(200).json({
+        status: 'success',
+        data: {
+            note
+        }
+    });
 });
 // Handle view all Notes
 exports.getAllNote = catchAsync(async (req, res, next) => {
-    res.send('getAllNotes api is working');
+    const notes = await Note.find();
+    res.status(200).json({
+        status: 'success',
+        data: {
+            notes
+        }
+    });
 });
 // Handle update Note
 exports.updateNote = catchAsync(async (req, res, next) => {
-    res.send('updateNote api is working');
+    const note = await Note.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    });
+    res.status(200).json({
+        status: 'success',
+        data: {
+            note
+        }
+    });
 });
 // Handle delete Note
 exports.deleteNote = catchAsync(async (req, res, next) => {
-    res.send('deleteNote api is working');
+    await Note.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+        status: 'success',
+        data: null
+    });
 });
