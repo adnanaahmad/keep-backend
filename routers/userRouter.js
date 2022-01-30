@@ -2,8 +2,11 @@
 let router = require('express').Router();
 // Import user controller
 let userController = require('../controllers/userController');
-
+// Import auth controller
+let authController = require('../controllers/authController');
 // User routes
+router.post('/signup', authController.signup);
+
 router.route('/')
     .get(userController.getAllUser)
     .post(userController.createUser);
