@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 let validator = require('validator');
+const bcrypt = require('bcrypt');
 // Setup schema
 let userSchema = mongoose.Schema({
     name: {
@@ -22,8 +23,25 @@ let userSchema = mongoose.Schema({
         required: [true, 'Please provide your password']
     },
     confirmPassword: {
-        type: String
+        type: String,
+        required: [true, 'Please confirm your password'],
+        validate: {
+            // this function only runs on create and save
+            validator: function(el) {
+                return el === this.password;
+            }
+        }
     }
+});
+/**
+ * this function only runs if password is modified
+ */
+userSchema.pre('save', async function(next) {
+    if(!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);
+    this.confirmPassword = undefined;
+    next();
 });
 // Export user
 module.exports = mongoose.model('user', userSchema);
