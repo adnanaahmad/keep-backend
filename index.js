@@ -9,6 +9,8 @@ let noteRouter = require("./routers/noteRouter");
 let globalErrorHandler = require('./controllers/errorController');
 // import app error class
 const AppError = require('./utility/appError');
+// import env variables
+require('dotenv').config();
 
 // Initialize the app
 let app = express();
@@ -19,7 +21,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/resthub', { useNewUrlParser: true});
+mongoose.connect(process.env.DATABASE_LOCAL, { useNewUrlParser: true});
 let db = mongoose.connection;
 
 // Added check for DB connection
