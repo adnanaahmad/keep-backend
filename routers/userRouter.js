@@ -6,6 +6,7 @@ let userController = require('../controllers/userController');
 let authController = require('../controllers/authController');
 // User routes
 router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 
 router.route('/')
     .get(userController.getAllUser)

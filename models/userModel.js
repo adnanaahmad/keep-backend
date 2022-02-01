@@ -43,5 +43,13 @@ userSchema.pre('save', async function(next) {
     this.confirmPassword = undefined;
     next();
 });
+/**
+ * we're gonna create something called an instance method. 
+ * So an instance method is basically a method that is gonna
+ * be available on all documents of a certain collection
+ */
+userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+}
 // Export user
 module.exports = mongoose.model('user', userSchema);
