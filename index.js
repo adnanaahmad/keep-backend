@@ -1,5 +1,7 @@
 // Import express
 let express = require('express');
+// Import cors
+let cors = require('cors')
 // Import Mongoose
 let mongoose = require('mongoose');
 // Import routes
@@ -14,6 +16,11 @@ require('dotenv').config();
 
 // Initialize the app
 let app = express();
+
+let corsOptions = {
+    origin: ['http://localhost:3000'],
+}
+app.use(cors(corsOptions));
 
 // Parse URL-encoded bodies
 app.use(express.urlencoded({extended: true}));
