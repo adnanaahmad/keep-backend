@@ -15,14 +15,21 @@ module.exports = class Email {
     /**
      * createTransport function
      * we wanna have different transports based on production or development environment,
-     * because unlike development mode ( where node mailer is used to send emails),
-     * real emails are sent in production using send grid.
+     * because unlike development mode ( where node mailer is used to send emails to mailtrap),
+     * real emails are sent in production via send grid service.
      */
     createTransport() {
         if(process.env.NODE_DEV === 'production') {
             // send grid
-            return 1;
+            return nodemailer.createTransport({
+                service: 'SendGrid',
+                auth: {
+                    user: process.env.SENDGRID_USERNAME,
+                    pass: process.env.SENDGRID_PASSWORD
+                }
+            });
         } else {
+            // mailtrap
             return nodemailer.createTransport({
                 host: process.env.EMAIL_HOST,
                 port: process.env.EMAIL_PORT,
