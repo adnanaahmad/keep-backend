@@ -7,6 +7,7 @@ const User = require('../models/userModel');
 const catchAsync = require('../utility/catchAsync');
 const jwt = require('jsonwebtoken')
 const AppError = require('../utility/appError');
+const Email = require('../utility/email');
 
 const signToken = id => {
     return jwt.sign({id}, process.env.JWT_SECRET);
@@ -20,6 +21,9 @@ exports.signup = catchAsync(async(req, res, next) => {
         confirmPassword: req.body.confirmPassword
     });
     const token = signToken(newUser._id);
+    const url = `${req.protocol}://${req.get('host')}/login`;
+    //console.log(url);
+    await new Email(newUser, url).sendWelcome();
     res.status(201).json({
         status: 'success',
         token,
