@@ -3,6 +3,7 @@
  *  logging users in, or updating passwords will be done
  *  in the authentication controller.
  */
+const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utility/catchAsync');
 const jwt = require('jsonwebtoken')
@@ -58,3 +59,29 @@ exports.verify = catchAsync(async(req, res, next) => {
         status: 'success',
     });
 });
+
+exports.protect = catchAsync(async(req, res, next) => {
+    let token;
+
+    // 1. check if token exists
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split[' '][1];
+    }
+    if(!token) {
+        return next(new AppError(`You are not logged in`, 401));
+    }
+
+    // 2. validate token / verification
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // 3. check if user exists
+    const user = await User.findById(decoded.id);
+    if (!user) {
+        return next(new AppError(`The user belonging to this token doesn't exist`, 401));
+    }
+
+    // 4. check if user changed password after jwt was issued
+
+    // 5. Grant access to the protected route.
+    next();
+})
