@@ -53,7 +53,7 @@ exports.login = catchAsync(async(req, res, next) => {
     });
 });
 
-exports.verify = catchAsync(async(req, res, next) => {
+exports.verifyAccount = catchAsync(async(req, res, next) => {
     const {token} = req.body;
     res.status(200).json({
         status: 'success',
