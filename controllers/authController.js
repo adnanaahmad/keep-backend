@@ -82,6 +82,8 @@ exports.protect = catchAsync(async(req, res, next) => {
 
     // 4. check if user changed password after jwt was issued
 
+    // this will be helpful for next middlewares
+    req.user = user;
     // 5. Grant access to the protected route.
     next();
 })
