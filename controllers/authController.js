@@ -54,9 +54,14 @@ exports.login = catchAsync(async(req, res, next) => {
 });
 
 exports.verifyAccount = catchAsync(async(req, res, next) => {
-    const {token} = req.body;
+    const user = await User.findByIdAndUpdate(req.user._id, {accountStatus: true}, {
+        new: true,
+    });
     res.status(200).json({
         status: 'success',
+        data: {
+            user
+        }
     });
 });
 
@@ -65,7 +70,7 @@ exports.protect = catchAsync(async(req, res, next) => {
 
     // 1. check if token exists
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-        token = req.headers.authorization.split[' '][1];
+        token = req.headers.authorization.split(' ')[1];
     }
     if(!token) {
         return next(new AppError(`You are not logged in`, 401));

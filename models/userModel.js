@@ -31,6 +31,10 @@ let userSchema = mongoose.Schema({
                 return el === this.password;
             }
         }
+    },
+    accountStatus: {
+        type: Boolean,
+        default: false
     }
 });
 /**
