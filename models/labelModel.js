@@ -1,16 +1,8 @@
 let mongoose = require('mongoose');
 // Setup schema
-let noteSchema = mongoose.Schema({
-    title: {
+let labelSchema = mongoose.Schema({
+    name: {
         type: String,
-    },
-    description: {
-        type: String,
-    },
-    label: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Label',
-        default: null
     },
     dateCreated: {
         type: Date,
@@ -23,4 +15,4 @@ let noteSchema = mongoose.Schema({
     }
 });
 // Export note
-module.exports = mongoose.model('Note', noteSchema);
+module.exports = mongoose.model('Label', labelSchema);

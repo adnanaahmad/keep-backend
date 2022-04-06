@@ -1,5 +1,5 @@
 const catchAsync = require('../utility/catchAsync');
-// Import user model
+// Import label model
 let Note = require('../models/noteModel');
 
 // Handle create Note

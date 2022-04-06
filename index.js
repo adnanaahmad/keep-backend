@@ -7,6 +7,7 @@ let mongoose = require('mongoose');
 // Import routes
 let userRouter = require("./routers/userRouter");
 let noteRouter = require("./routers/noteRouter");
+let labelRouter = require("./routers/labelRouter");
 // import global error middleware
 let globalErrorHandler = require('./controllers/errorController');
 // import app error class
@@ -40,6 +41,7 @@ else
 // Routes
 app.use('/api/users', userRouter);
 app.use('/api/notes', noteRouter);
+app.use('/api/labels', labelRouter);
 app.use('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`), 404);
 });
