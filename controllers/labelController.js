@@ -4,7 +4,7 @@ let Label = require('../models/labelModel');
 
 // Handle create Label
 exports.createLabel = catchAsync(async (req, res, next) => {
-    const label = await Label.create(req.body);
+    const label = await Label.create({...req.body, user: req.user.id});
     res.status(201).json({
         status: 'success',
         data: {
@@ -24,7 +24,7 @@ exports.getLabel = catchAsync(async (req, res, next) => {
 });
 // Handle view all Labels
 exports.getAllLabels = catchAsync(async (req, res, next) => {
-    const labels = await Label.find();
+    const labels = await Label.find({user: req.user.id});
     res.status(200).json({
         status: 'success',
         data: {

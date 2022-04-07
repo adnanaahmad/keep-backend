@@ -4,7 +4,7 @@ let Note = require('../models/noteModel');
 
 // Handle create Note
 exports.createNote = catchAsync(async (req, res, next) => {
-    const newNote = await Note.create(req.body);
+    const newNote = await Note.create({...req.body, user: req.user.id});
     res.status(201).json({
         status: 'success',
         data: {
@@ -24,7 +24,7 @@ exports.getNote = catchAsync(async (req, res, next) => {
 });
 // Handle view all Notes
 exports.getAllNote = catchAsync(async (req, res, next) => {
-    const notes = await Note.find();
+    const notes = await Note.find({user: req.user.id});
     res.status(200).json({
         status: 'success',
         data: {
