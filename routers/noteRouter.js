@@ -2,15 +2,17 @@
 let router = require('express').Router();
 // Import note controller
 let noteController = require('../controllers/noteController');
+// Import auth controller
+let authController = require('../controllers/authController');
 
 // Note routes
 router.route('/')
-    .get(noteController.getAllNote)
-    .post(noteController.createNote);
+    .get(authController.protect, noteController.getAllNote)
+    .post(authController.protect, noteController.createNote);
 router.route('/:id')
-    .get(noteController.getNote)
-    .patch(noteController.updateNote)
-    .put(noteController.updateNote)
-    .delete(noteController.deleteNote);
+    .get(authController.protect, noteController.getNote)
+    .patch(authController.protect, noteController.updateNote)
+    .put(authController.protect, noteController.updateNote)
+    .delete(authController.protect, noteController.deleteNote);
 // Export API routes
 module.exports = router;

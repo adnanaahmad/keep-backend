@@ -10,12 +10,12 @@ router.post('/login', authController.login);
 router.patch('/verifyAccount', authController.protect, authController.verifyAccount);
 
 router.route('/')
-    .get(userController.getAllUser)
-    .post(userController.createUser);
+    .get(authController.protect, userController.getAllUser)
+    .post(authController.protect, userController.createUser);
 router.route('/:id')
-    .get(userController.getUser)
-    .patch(userController.updateUser)
-    .put(userController.updateUser)
-    .delete(userController.deleteUser)
+    .get(authController.protect, userController.getUser)
+    .patch(authController.protect, userController.updateUser)
+    .put(authController.protect, userController.updateUser)
+    .delete(authController.protect, userController.deleteUser)
 // Export API routes
 module.exports = router;
