@@ -14,7 +14,7 @@ exports.createNote = catchAsync(async (req, res, next) => {
 });
 // Handle view Note
 exports.getNote = catchAsync(async (req, res, next) => {
-    const note = await Note.findById(req.params.id);
+    const note = await Note.findOne({_id: req.params.id, user: req.user.id});
     res.status(200).json({
         status: 'success',
         data: {
@@ -34,7 +34,7 @@ exports.getAllNote = catchAsync(async (req, res, next) => {
 });
 // Handle update Note
 exports.updateNote = catchAsync(async (req, res, next) => {
-    const note = await Note.findByIdAndUpdate(req.params.id, req.body, {
+    const note = await Note.findOneAndUpdate({_id: req.params.id, user: req.user.id}, req.body, {
         new: true,
         runValidators: true
     });
@@ -47,7 +47,7 @@ exports.updateNote = catchAsync(async (req, res, next) => {
 });
 // Handle delete Note
 exports.deleteNote = catchAsync(async (req, res, next) => {
-    await Note.findByIdAndDelete(req.params.id);
+    await Note.findOneAndDelete({_id: req.params.id, user: req.user.id});
     res.status(204).json({
         status: 'success',
         data: null
