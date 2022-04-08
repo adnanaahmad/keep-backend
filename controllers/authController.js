@@ -22,7 +22,7 @@ exports.signup = catchAsync(async(req, res, next) => {
         confirmPassword: req.body.confirmPassword
     });
     const token = signToken(newUser._id);
-    const url = `${req.protocol}://${req.get('host')}/login`;
+    const url = `${req.protocol}://${req.get('host')}/account-status?token=${token}`;
     //console.log(url);
     await new Email(newUser, url).sendWelcome();
     res.status(201).json({
@@ -59,9 +59,7 @@ exports.verifyAccount = catchAsync(async(req, res, next) => {
     });
     res.status(200).json({
         status: 'success',
-        data: {
-            user
-        }
+        data: null
     });
 });
 
