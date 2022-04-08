@@ -22,8 +22,8 @@ exports.signup = catchAsync(async(req, res, next) => {
         confirmPassword: req.body.confirmPassword
     });
     const token = signToken(newUser._id);
-    const url = `${req.protocol}://${req.get('host')}/account-status?token=${token}`;
-    //console.log(url);
+    const url = `${req.headers.origin}/account-status?token=${token}`;
+    //console.log(url, req.get('host'), req);
     await new Email(newUser, url).sendWelcome();
     res.status(201).json({
         status: 'success',
