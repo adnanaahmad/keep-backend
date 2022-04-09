@@ -27,10 +27,10 @@ exports.signup = catchAsync(async(req, res, next) => {
     await new Email(newUser, url).sendWelcome();
     res.status(201).json({
         status: 'success',
-        token,
-        data : {
-            newUser
-        }
+        // token,
+        // data : {
+        //     newUser
+        // }
     });
 });
 
