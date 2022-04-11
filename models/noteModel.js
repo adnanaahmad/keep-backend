@@ -20,6 +20,11 @@ let noteSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    type: {
+        type: String, 
+        enum: ['default', 'archive', 'trash'],
+        default: 'default'
+    },
     dateCreated: {
         type: Date,
         default: Date.now
