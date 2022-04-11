@@ -12,6 +12,14 @@ let noteSchema = mongoose.Schema({
         ref: 'Label',
         default: null
     },
+    x: {
+        type: Number,
+        default: 0
+    },
+    y: {
+        type: Number,
+        default: 0
+    },
     dateCreated: {
         type: Date,
         default: Date.now
